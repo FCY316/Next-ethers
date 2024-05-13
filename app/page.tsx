@@ -1,11 +1,12 @@
 'use client'
+import Copy from "@/components/copy";
+import useWallet from "@/store/useWallet";
 
 export default function Home() {
-  console.log(process.env.NODE_ENV);
-  console.log(process.env.NEXT_PUBLIC_URL);
-
+  const { connectedWallet, wallet: { address }, contract: { erc20 } } = useWallet()
   return (
     <>
-    </>
+      <span onClick={() => { connectedWallet() }} >123</span>
+      {address} <Copy msg="123" /></>
   );
 }
