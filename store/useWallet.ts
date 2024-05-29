@@ -44,8 +44,6 @@ export const useWallet = create<AppState>((set) => {
         const provider = new ethers.BrowserProvider(
           eval(`window.${walletNameList[walletName]}`)
         );
-        console.log(123);
-
         // 获取signer
         const signer = await provider.getSigner();
         // 获取地址address

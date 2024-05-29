@@ -9,6 +9,7 @@
     "lint": "next lint",
     "start:dev": "cross-env NODE_ENV=development next dev",
     "start:test": "cross-env NODE_ENV=test next dev",
+    "start:pro": "cross-env NODE_ENV=production next dev",
     "build:dev": "cross-env NODE_ENV=development next build",
     "build:test": "cross-env NODE_ENV=test next build",
     "build:pro": "cross-env NODE_ENV=production next build"

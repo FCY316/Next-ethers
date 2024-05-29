@@ -7,17 +7,16 @@ type objKeyObjectType = {
 type numberAny = {
   [key: number]: objKeyObjectType;
 };
-console.log("环境", process.env.NODE_ENV);
-// if (process.env.NODE_ENV === "development") {
-//   //开发环境
-//   FContact.erc20.address = "";
-// } else if (process.env.NODE_ENV === "test") {
-//   // 测试环境
-//   FContact.erc20.address = "";
-// } else {
-//   //生产环境
-//   FContact.erc20.address = "";
-// }
+if (process.env.REACT_NODE_ENV === "development") {
+  console.log("环境", process.env.REACT_NODE_ENV);
+  //开发环境
+} else if (process.env.REACT_NODE_ENV === "test") {
+  // 测试环境
+  console.log("环境", process.env.REACT_NODE_ENV);
+} else {
+  //生产环境
+  console.log("环境", process.env.REACT_NODE_ENV);
+}
 
 const contractAll: numberAny = {
   12306: {
