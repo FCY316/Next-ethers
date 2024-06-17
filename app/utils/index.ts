@@ -2,17 +2,46 @@ import blockies from "ethereum-blockies";
 import { Decimal } from "decimal.js";
 import dayjs from "dayjs";
 
+/**
+ * 函数addDecimal用于将两个数字或字符串类型的数字相加，返回相加结果的字符串形式。
+ * 此函数特别适用于需要进行高精度计算的场景，可以避免JavaScript中浮点数计算的精度问题。
+ *
+ * @param num1 第一个操作数，可以是数字或字符串类型的数字。
+ * @param num2 第二个操作数，可以是数字或字符串类型的数字。
+ * @returns 返回相加结果的字符串形式。
+ */
 export const addDecimal = (num1: number | string, num2: number | string) => {
   return new Decimal(num1).plus(num2).toString();
 };
 
+/**
+ * 减去两个十进制数并返回结果。
+ *
+ * 此函数接受两个参数，可以是数字或字符串。它使用Decimal库来处理减法操作，
+ * 以确保精确的十进制计算。这对于处理货币或其他需要高精度计算的场景非常有用。
+ *
+ * @param num1 第一个数，可以是数字或字符串。
+ * @param num2 第二个数，可以是数字或字符串。
+ * @returns 返回两个数相减的结果，以字符串形式表示。
+ */
 export const subtractDecimal = (
   num1: number | string,
   num2: number | string
 ) => {
+  // 使用Decimal库进行减法运算，并将结果转换为字符串格式返回
   return new Decimal(num1).minus(num2).toString();
 };
 
+/**
+ * 多乘以两个十进制数。
+ *
+ * 此函数旨在提供一种精确的乘法运算，适用于包含小数的数值计算。
+ * 它使用了`Decimal`库来处理运算，以避免JavaScript中浮点数计算的精度问题。
+ *
+ * @param num1 第一个乘数，可以是数字或字符串形式的十进制数。
+ * @param num2 第二个乘数，可以是数字或字符串形式的十进制数。
+ * @returns 返回两个乘数的精确乘积，以字符串形式表示。
+ */
 export const multiplyDecimal = (
   num1: number | string,
   num2: number | string
@@ -20,6 +49,16 @@ export const multiplyDecimal = (
   return new Decimal(num1).times(num2).toString();
 };
 
+/**
+ * 分割小数点进行除法运算。
+ *
+ * 该函数接受两个参数，可以是数字或字符串。它使用`Decimal`库来处理除法运算，
+ * 旨在提供更高精度的除法结果，避免JavaScript中浮点数计算的精度问题。
+ *
+ * @param num1 被除数，可以是数字或字符串。
+ * @param num2 除数，可以是数字或字符串。
+ * @returns 返回除法运算的结果，以字符串形式表示，确保了高精度。
+ */
 export const divideDecimal = (num1: number | string, num2: number | string) => {
   return new Decimal(num1).dividedBy(num2).toString();
 };

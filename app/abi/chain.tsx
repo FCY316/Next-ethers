@@ -35,3 +35,24 @@ export const chainParams: any = {
         blockExplorerUrls: ['https://bscscan.com/'],
     }
 };
+// 钱包
+export const walletList: {
+    [key: string]: {
+        walletIs: string, // 检查是否有钱包 tp钱包检查是看ethereum.isTokenPocket 而连接仍是ethereum
+        ethereum: string, // 初始化的ethereum
+        download: string, // 下载链接
+    };
+} = {
+    'MetaMask': {
+        walletIs: "ethereum",
+        ethereum: 'ethereum',
+        download: "https://metamask.io/",
+
+    },
+    'TokenPocket': {
+        walletIs: "ethereum.isTokenPocket",
+        ethereum: 'ethereum',
+        download: "https://extension.tokenpocket.pro/#/",
+    }
+
+}

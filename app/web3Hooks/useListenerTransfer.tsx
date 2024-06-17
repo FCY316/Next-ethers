@@ -1,4 +1,4 @@
-import useWallet from "@/store/useWallet";
+import useWallet from "@/app/store/useWallet";
 // 监听交易是否成功
 const useListenerTransfer = () => {
     // 拿到provider

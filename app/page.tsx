@@ -1,13 +1,13 @@
 'use client'
-import Copy from "@/components/copy";
-import useAddressConvert from "@/hooks/useAddressConvert";
-import useAddressType from "@/store/useAddressType";
-import useWallet from "@/store/useWallet";
+import Copy from "@/app/components/copy";
+import useAddressConvert from "@/app/hooks/useAddressConvert";
+import useAddressType from "@/app/store/useAddressType";
+import useWallet from "@/app/store/useWallet";
 
 export default function Home() {
   const { addressConvert } = useAddressConvert()
   const { addressType, setAddressType } = useAddressType()
-  const { connectedWallet, wallet: { address } } = useWallet()
+  const { connectedWallet, wallet: { address }, contract: { erc20 } } = useWallet()
   return (
     <>
       <span onClick={() => { connectedWallet() }} >123</span>

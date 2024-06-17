@@ -1,9 +1,7 @@
 import { Contract, Provider, Signer, ethers } from "ethers";
 import { create } from "zustand";
-import { download, walletNameList, walletNameListShow } from "@/walletName";
-import contractAll from "@/abi";
-import { stringKeyObj } from "@/interface";
-import { chainIDArr, chainParams } from "@/chain";
+import contractAll from "@/app/abi";
+import { chainIDArr, chainParams, walletList } from "@/app/abi/chain";
 import { enqueueSnackbar } from "notistack";
 
 type walletType = {
@@ -14,11 +12,10 @@ type walletType = {
   chainId: number;
 };
 type ContractType = {
+  [key: string]: Contract | null;
   erc20: Contract | null;
 };
-const initialContract: ContractType = {
-  erc20: null,
-};
+
 interface AppState {
   wallet: walletType;
   contract: ContractType;
@@ -30,6 +27,10 @@ export const useWallet = create<AppState>((set) => {
   let switchState = false;
   let netWorkState = false;
   let addressState = false;
+  // 合约
+  let initialContract: ContractType = {
+    erc20: null,
+  };
   let initialWallet = {
     provider: null,
     signer: null,
@@ -40,9 +41,9 @@ export const useWallet = create<AppState>((set) => {
   // 连接钱包
   const connectedWallet = async (walletName: string = "MetaMask") => {
     try {
-      if (eval(`window.${walletNameListShow[walletName]}`)) {
+      if (eval(`window.${walletList[walletName].walletIs}`)) {
         const provider = new ethers.BrowserProvider(
-          eval(`window.${walletNameList[walletName]}`)
+          eval(`window.${walletList[walletName].ethereum}`)
         );
         // 获取signer
         const signer = await provider.getSigner();
@@ -58,11 +59,10 @@ export const useWallet = create<AppState>((set) => {
             ? chainIdWithoutSuffix.slice(0, -1)
             : chainIdWithoutSuffix
         );
-        let contract: stringKeyObj = {};
         // 遍历出当前chainId下的合约
         Object.keys(contractAll[chainId] || {}).forEach((key) => {
           if (contractAll[chainId][key].address) {
-            contract[key] = new Contract(
+            initialContract[key] = new Contract(
               contractAll[chainId][key].address,
               contractAll[chainId][key].abi,
               signer
@@ -76,14 +76,14 @@ export const useWallet = create<AppState>((set) => {
         }
         // 监听网络
         if (!netWorkState) {
-          eval(`window.${walletNameList[walletName]}`)?.on(
+          eval(`window.${walletList[walletName].ethereum}`)?.on(
             "chainChanged",
             (newNetwork: any) => {
               const chainID = Number(newNetwork);
               // 查看切换的链是否是我们支持的链
               if (chainIDArr.indexOf(chainID) === -1) {
                 enqueueSnackbar(
-                  `You are currently under Chain${chainID} and cannot provide service for you`,
+                  `You are currently under Chain ${chainID} and cannot provide service for you`,
                   { variant: "warning" }
                 );
                 connectedWallet(walletName);
@@ -94,7 +94,7 @@ export const useWallet = create<AppState>((set) => {
         }
         // 监听地址
         if (!addressState) {
-          eval(`window.${walletNameList[walletName]}`)?.on(
+          eval(`window.${walletList[walletName].ethereum}`)?.on(
             "accountsChanged",
             () => {
               connectedWallet(walletName);
@@ -133,10 +133,10 @@ export const useWallet = create<AppState>((set) => {
         set((state) => ({
           ...state,
           wallet: { ...state.wallet, provider, signer, address, chainId },
-          contract: contract as ContractType,
+          contract: initialContract,
         }));
       } else {
-        window.open(download[walletName]);
+        window.open(walletList[walletName].download);
       }
     } catch (e) {
       console.log("Error connecting wallet:", e);

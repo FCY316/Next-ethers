@@ -1,8 +1,17 @@
 import { useCallback } from "react";
 import { Buffer } from "buffer";
 import { isAddress } from "ethers";
-import useAddressType from "@/store/useAddressType";
+import useAddressType from "@/app/store/useAddressType";
 const { bech32 } = require("bech32");
+/**
+ * @description: 地址转换Hooks
+ * @return 返回
+ *    addressConvert,       地址转换 会根据地址类型进行转换
+ *    validateAddress,      判断是不是正确的地址 0x fb 都可以检查
+ *    validateAddress0x,    判断是不是正确的0x地址
+ *    validateAddressFb     判断是不是正确的fb地址
+ *
+ */
 // 转换地址，可以转0x 也可以转fb 判断是不是正确的地址
 const useAddressConvert = () => {
     // 地址类型 本地

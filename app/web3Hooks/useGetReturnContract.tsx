@@ -1,5 +1,5 @@
 import { Contract } from "ethers"
-import useWallet from "@/store/useWallet";
+import useWallet from "@/app/store/useWallet";
 // 获取合约事件返回的内容
 // 传入合约
 const useGetReturnContract = (contract: Contract | null) => {
